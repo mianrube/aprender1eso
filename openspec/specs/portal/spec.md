@@ -23,21 +23,6 @@ El portal SHALL mostrar el título «¡Hola! ¿Qué aprendemos hoy?» y un texto
 - **WHEN** se muestra el portal
 - **THEN** aparecen el título y el texto de bienvenida
 
-### Requirement: Tarjeta del módulo Europa
-El portal SHALL mostrar una tarjeta del módulo «Países y capitales de Europa» con las etiquetas «Geografía» y «51 países · 4 niveles · 6 retos», la barra «Tu dominio {x}%» y un botón. El botón SHALL decir «¡Empezar!» si el dominio es 0 y «Continuar» si es mayor que 0.
-
-#### Scenario: Sin dominio
-- **WHEN** el dominio total guardado es 0
-- **THEN** la barra muestra 0% y el botón dice «¡Empezar!»
-
-#### Scenario: Con dominio
-- **WHEN** el dominio total guardado es mayor que 0
-- **THEN** la barra muestra el porcentaje y el botón dice «Continuar»
-
-#### Scenario: Módulo aún no disponible
-- **WHEN** el alumno pulsa el botón de la tarjeta antes de que exista la pantalla del módulo
-- **THEN** la app navega a la ruta del módulo, que muestra un aviso de «próximamente» con enlace de vuelta al portal
-
 ### Requirement: Tarjeta «Próximamente»
 El portal SHALL mostrar una tarjeta discontinua «Más misiones en camino» con el texto «Pronto podrás practicar otras materias desde aquí.».
 
@@ -66,3 +51,22 @@ El portal SHALL ofrecer una acción «Borrar mi progreso» que pida confirmació
 #### Scenario: Cancelar borrado
 - **WHEN** el alumno cancela la confirmación
 - **THEN** el progreso no cambia
+
+### Requirement: Tarjeta del módulo con mapa de dominio
+El portal SHALL mostrar una tarjeta del módulo «Países y capitales de Europa» con las etiquetas «Geografía» y «51 países · 4 niveles · 6 retos», la barra «Tu dominio {x}%», un botón y un mapa de dominio de Europa sin interacción que refleje el dominio de cada país. El botón SHALL decir «¡Empezar!» si el dominio es 0 y «Continuar» si es mayor que 0, y SHALL llevar a la pantalla del módulo.
+
+#### Scenario: Sin dominio
+- **WHEN** el dominio total guardado es 0
+- **THEN** la barra muestra 0%, el botón dice «¡Empezar!» y el mapa aparece sin colorear
+
+#### Scenario: Con dominio
+- **WHEN** el dominio total guardado es mayor que 0
+- **THEN** la barra muestra el porcentaje, el botón dice «Continuar» y los países con dominio aparecen coloreados según su nivel
+
+#### Scenario: Acceso al módulo
+- **WHEN** el alumno pulsa el botón de la tarjeta
+- **THEN** la app navega a la pantalla del módulo en `#/europa`
+
+#### Scenario: Mapa sin interacción
+- **WHEN** el alumno pulsa o pasa el ratón sobre el mapa de la tarjeta
+- **THEN** no ocurre nada: no hay selección, tooltip ni navegación

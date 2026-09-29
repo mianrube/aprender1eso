@@ -49,4 +49,4 @@
 
 - [x] 7.1 Actualizar `README.md` con la estructura nueva (`engine/`, mapa, retos) y `js/config.js`; verificar que los comandos documentados siguen funcionando.
 - [x] 7.2 Pasar `node --test` completo y una prueba manual en 360px, tablet y escritorio de portal → módulo → cada reto → resultados sin errores de consola ni peticiones externas.
-- [ ] 7.3 Tras el push a `main`, comprobar que el workflow termina en verde y que el módulo funciona en la URL publicada.
+- [x] 7.3 Tras el push a `main`, comprobar que el workflow termina en verde y que el módulo funciona en la URL publicada.
