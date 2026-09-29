@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<style>
+html,body{margin:0;height:100%;background:#CFE7F5;overflow:hidden;font-family:Nunito,system-ui,sans-serif}
+svg{width:100%;height:100%;display:block}
+.eu{transition:fill .25s}
+body.int .eu{cursor:pointer}
+body.int .eu:hover{filter:brightness(.9)}
+#tip{position:fixed;pointer-events:none;background:#1F2335;color:#fff;padding:5px 11px;border-radius:10px;font:800 13px Nunito,system-ui,sans-serif;display:none;white-space:nowrap}
+#load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#5B7A8C;font:700 14px Nunito,system-ui,sans-serif}
+</style></head>
+<body>
+<div id="load">Cargando mapa…</div>
+<svg id="m" viewBox="0 0 800 760" preserveAspectRatio="xMidYMid meet"></svg>
+<div id="tip"></div>
+<script>
+const NUM={8:'al',20:'ad',31:'az',40:'at',51:'am',56:'be',70:'ba',100:'bg',112:'by',191:'hr',196:'cy',203:'cz',208:'dk',233:'ee',246:'fi',250:'fr',268:'ge',276:'de',300:'gr',336:'va',348:'hu',352:'is',372:'ie',380:'it',398:'kz',428:'lv',438:'li',440:'lt',442:'lu',470:'mt',492:'mc',498:'md',499:'me',528:'nl',578:'no',616:'pl',620:'pt',642:'ro',643:'ru',674:'sm',688:'rs',703:'sk',705:'si',724:'es',752:'se',756:'ch',792:'tr',804:'ua',807:'mk',826:'gb'};
+const BYNAME={'Kosovo':'xk','Norway':'no','France':'fr','N. Cyprus':'cy','Macedonia':'mk','North Macedonia':'mk','Bosnia and Herz.':'ba','Montenegro':'me','Serbia':'rs'};
+const DOTS={mt:[14.45,35.9],lu:[6.13,49.75],ad:[1.52,42.51],li:[9.55,47.14],mc:[7.42,43.74],sm:[12.45,43.94],va:[12.45,41.9]};
+const FALLBACK={xk:[20.9,42.6],mk:[21.7,41.6],me:[19.3,42.8],ba:[17.8,44.2],cy:[33.2,35.0]};
+const MARK={ok:'#22B573',bad:'#F0555A'};
+let st={fills:{},names:{},interactive:false,showNames:false,marks:{}};
+const svg=d3.select('#m'), tip=document.getElementById('tip');
+const proj=d3.geoAzimuthalEqualArea().rotate([-20,-54]).clipAngle(70)
+  .fitExtent([[14,14],[786,746]],{type:'MultiPoint',coordinates:[[-24,64],[-10,36],[44,36],[62,48],[32,71],[-8,56]]});
+const path=d3.geoPath(proj);
+let euSel=null;
+function apply(){
+  document.body.classList.toggle('int',!!st.interactive);
+  if(!euSel)return;
+  euSel.attr('fill',d=>MARK[st.marks[d.iso]]||st.fills[d.iso]||'#FFFFFF')
+    .attr('stroke-width',d=>st.marks[d.iso]?2.2:0.9);
+  euSel.filter(d=>st.marks[d.iso]).raise();
+  svg.selectAll('circle.eu').raise();
+}
+function showTip(e,d){
+  if(!st.showNames||!st.names[d.iso]){tip.style.display='none';return}
+  tip.textContent=st.names[d.iso];tip.style.display='block';
+  const x=Math.min(e.clientX+12,innerWidth-tip.offsetWidth-6);
+  tip.style.left=x+'px';tip.style.top=(e.clientY-34)+'px';
+}
+fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(r=>r.json()).then(topo=>{
+  document.getElementById('load').remove();
+  const feats=topojson.feature(topo,topo.objects.countries).features;
+  feats.forEach(f=>f.iso=NUM[+f.id]||BYNAME[f.properties&&f.properties.name]);
+  const have=new Set(feats.map(f=>f.iso));
+  Object.entries(FALLBACK).forEach(([iso,ll])=>{if(!have.has(iso))DOTS[iso]=ll});
+  svg.append('g').selectAll('path').data(feats.filter(f=>!f.iso)).join('path')
+    .attr('d',path).attr('fill','#EEE9DE').attr('stroke','#FFFFFF').attr('stroke-width',0.8);
+  const g=svg.append('g');
+  g.selectAll('path').data(feats.filter(f=>f.iso)).join('path').attr('class','eu').attr('d',path);
+  Object.entries(DOTS).forEach(([iso,ll])=>{const p=proj(ll);g.append('circle').datum({iso}).attr('class','eu').attr('cx',p[0]).attr('cy',p[1]).attr('r',5.5)});
+  euSel=g.selectAll('.eu').attr('stroke','#1F2335').attr('stroke-linejoin','round')
+    .on('click',(e,d)=>{if(st.interactive)parent.postMessage({src:'rumbo-map',type:'click',iso:d.iso},'*')})
+    .on('mousemove',showTip).on('mouseleave',()=>tip.style.display='none');
+  apply();
+  parent.postMessage({src:'rumbo-map',type:'ready'},'*');
+});
+addEventListener('message',e=>{const d=e.data;if(!d||d.src!=='rumbo-parent')return;st={...st,...d};if(!st.showNames)tip.style.display='none';apply()});
+parent.postMessage({src:'rumbo-map',type:'ready'},'*');
+</script>
+</body></html>

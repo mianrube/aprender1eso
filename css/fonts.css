@@ -1,0 +1,8 @@
+/* Fuentes locales (subconjunto latino). Rutas relativas a este fichero. */
+@font-face { font-family: Fredoka; font-weight: 500; font-style: normal; font-display: swap; src: url(../vendor/fonts/fredoka-500.woff2) format('woff2'); }
+@font-face { font-family: Fredoka; font-weight: 600; font-style: normal; font-display: swap; src: url(../vendor/fonts/fredoka-600.woff2) format('woff2'); }
+@font-face { font-family: Fredoka; font-weight: 700; font-style: normal; font-display: swap; src: url(../vendor/fonts/fredoka-700.woff2) format('woff2'); }
+@font-face { font-family: Nunito; font-weight: 500; font-style: normal; font-display: swap; src: url(../vendor/fonts/nunito-500.woff2) format('woff2'); }
+@font-face { font-family: Nunito; font-weight: 600; font-style: normal; font-display: swap; src: url(../vendor/fonts/nunito-600.woff2) format('woff2'); }
+@font-face { font-family: Nunito; font-weight: 700; font-style: normal; font-display: swap; src: url(../vendor/fonts/nunito-700.woff2) format('woff2'); }
+@font-face { font-family: Nunito; font-weight: 800; font-style: normal; font-display: swap; src: url(../vendor/fonts/nunito-800.woff2) format('woff2'); }

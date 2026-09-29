@@ -1,0 +1,44 @@
+/* Tokens de diseño de Rumbo (handoff: design/handoff/README.md). */
+:root {
+  --bg: #FBF7EF;
+  --surface: #FFFFFF;
+  --ink: #1F2335;
+  --muted: #5B6072;
+  --subtle: #8C8577;
+  --line: #EFE8DA;
+  --line-strong: #E6DECF;
+  --track: #EDE6D8;
+  --dashed: #DDD3C0;
+
+  --blue: #3B6EF5;   --blue-dark: #2A52C4;
+  --yellow: #FFC43D; --yellow-dark: #D99A0B;
+  --green: #22B573;  --green-dark: #178A56;
+  --red: #F0555A;    --red-dark: #C23A3F;
+  --purple: #8B5CF6; --purple-dark: #6A3FD1;
+  --orange: #FF8A3D; --orange-dark: #D96A1F;
+
+  --ok-bg: #E2F6EA;  --ok-ink: #146B43;
+  --bad-bg: #FDE7E7; --bad-ink: #A8282D;
+  --select-bg: #E8EEFF;
+
+  --points-bg: #FFF6DB; --points-line: #FFE08A; --points-ink: #8A5E00;
+  --streak-bg: #FFF1E6; --streak-line: #FFD2B0; --streak-ink: #A34C12;
+
+  --sea: #CFE7F5;
+  --land-context: #EEE9DE;
+  --badge-off-bg: #EDE8DC;
+  --badge-off-ink: #B7AE9C;
+
+  --font-display: Fredoka, system-ui, sans-serif;
+  --font-body: Nunito, system-ui, sans-serif;
+
+  --r-chip: 99px;
+  --r-btn: 18px;
+  --r-option: 20px;
+  --r-card: 24px;
+  --r-panel: 28px;
+  --r-hero: 30px;
+
+  --page-max: 1120px;
+  --page-pad: 20px;
+}

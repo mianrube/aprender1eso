@@ -1,0 +1,48 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+button, input { font-family: inherit; }
+button { cursor: pointer; color: inherit; }
+a { color: var(--blue); }
+a:hover { color: var(--blue-dark); }
+
+h1, h2, h3, p { margin: 0; }
+
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+#app { min-height: 100vh; display: flex; flex-direction: column; }
+
+.page {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 40px var(--page-pad) 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.section { display: flex; flex-direction: column; gap: 16px; }
+
+.h1 {
+  font: 700 clamp(34px, 6vw, 54px) / 1.05 var(--font-display);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.h2 { font: 600 24px var(--font-display); }
+.lead { font-size: 19px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
