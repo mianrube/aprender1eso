@@ -30,7 +30,7 @@ css/       tokens, base, componentes, módulo, reto y fuentes
 js/
   main.js, app.js, router.js, store.js, config.js
   data/    países y niveles, insignias, tipos de reto, identificadores del mapa
-  lib/     racha, dominio e insignias (lógica pura)
+  lib/     racha, dominio, insignias, orden alfabético y vista del mapa (zoom, toques): lógica pura
   engine/  motor de retos sin DOM: selección, preguntas, puntuación, sesión, niveles
   ui/      pantallas (portal, módulo, reto, resultados), mapa de Europa y los seis retos (play/)
 vendor/    d3-geo, topojson-client, world-atlas, banderas SVG y fuentes (todo local, sin CDNs)
@@ -38,6 +38,10 @@ tests/     node --test
 design/    handoff de diseño (referencia, no se publica)
 openspec/  especificaciones y cambios
 ```
+
+## Mapa en pantallas táctiles
+
+El reto Mapa tiene zoom (botones «+», «−» y «Restablecer», pellizco y arrastre con zoom). Un toque cerca de un país que se ve pequeño (menos de 28 px) se atribuye a ese país si cae a menos de 20 px; un arrastre o un pellizco nunca cuentan como respuesta. La lógica está en `js/lib/map-view.js` y sus umbrales son constantes exportadas.
 
 ## Ajustes del módulo
 

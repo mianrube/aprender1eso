@@ -8,6 +8,7 @@ import { UNLOCK_THRESHOLD, SHOW_CAPITALS, SHOW_CAPITAL_FROM } from '../config.js
 import { createEuropeMap, fillsFromMastery, namesFull } from './europe-map.js';
 import { flagSrc } from './assets.js';
 import { startSession } from './flow.js';
+import { sortByName } from '../lib/sort.js';
 
 // Opción «Todos»: nivel 0, siempre desbloqueado.
 const ALL_LEVEL = { n: LEVEL_ALL, name: 'Todos los países', color: 'green' };
@@ -112,7 +113,7 @@ export function renderModule({ save, onCleanup }) {
 
     h('section', { class: 'section' },
       h('h2', { class: 'h2 h2--sm' }, 'Tu dominio país a país'),
-      h('div', { class: 'rows' }, COUNTRIES.map(c => countryRow(c, save.m[c.id] || 0))),
+      h('div', { class: 'rows' }, sortByName(COUNTRIES).map(c => countryRow(c, save.m[c.id] || 0))),
     ),
   );
 }

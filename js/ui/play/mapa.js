@@ -5,7 +5,7 @@ import { createEuropeMap, blankFills, namesCountry } from '../europe-map.js';
 export function createMapBody({ act, onCleanup }) {
   const kicker = h('span', { class: 'kicker' });
   const main = h('span', { class: 'keyword' });
-  const map = createEuropeMap({ onCountryClick: iso => act.map(iso) });
+  const map = createEuropeMap({ onCountryClick: iso => act.map(iso), zoomable: true });
   onCleanup(() => map.destroy());
   const el = h('div', { class: 'q', style: { gap: '18px' } },
     h('div', { class: 'q__text', style: { gap: '4px' } }, kicker, main),
