@@ -27,4 +27,4 @@
 
 - [x] 5.1 Actualizar `README.md` (zoom y gestos del mapa, `js/lib/map-view.js`); verificar que las rutas y comandos documentados siguen siendo válidos.
 - [x] 5.2 Pasar `node --test` completo y una prueba manual del reto Mapa en 360 px, tablet y escritorio (sin scroll horizontal, sin peticiones externas, sin errores de consola); comprobar que el mapa de la tarjeta del portal y el del módulo no han cambiado de comportamiento.
-- [ ] 5.3 Tras el push a `main`, comprobar que el workflow termina en verde y que el reto Mapa funciona en la URL publicada.
+- [x] 5.3 Tras el push a `main`, comprobar que el workflow termina en verde y que el reto Mapa funciona en la URL publicada.
