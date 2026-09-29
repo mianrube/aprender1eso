@@ -1,21 +1,31 @@
-import { createStore } from './store.js';
+import { store, ui } from './app.js';
 import { createRouter } from './router.js';
 import { renderHeader } from './ui/header.js';
 import { renderHome } from './ui/home.js';
-import { renderModuleStub } from './ui/module-stub.js';
+import { renderModule } from './ui/module.js';
+import { renderPlay } from './ui/play.js';
+import { renderResults } from './ui/results.js';
 
-const store = createStore();
 const root = document.getElementById('app');
-let current = '/';
 
+// Cada ruta: chrome (cabecera general), live (se repinta al cambiar progreso o UI), guard y render.
 const routes = {
-  '/': save => renderHome(save, { onReset: () => store.reset() }),
-  '/europa': () => renderModuleStub(),
+  '/': { chrome: true, live: true, render: ctx => renderHome(ctx, { onReset: () => store.reset() }) },
+  '/europa': { chrome: true, live: true, render: renderModule },
+  '/europa/reto': { chrome: false, live: false, guard: () => (ui.get().session && !ui.get().session.finished ? null : '/europa'), render: renderPlay },
+  '/europa/resultados': { chrome: false, live: false, guard: () => (ui.get().session && ui.get().session.finished ? null : '/europa'), render: renderResults },
 };
 
+let current = '/';
+let cleanups = [];
+
 function render() {
+  cleanups.forEach(fn => fn());
+  cleanups = [];
+  const route = routes[current];
   const save = store.get();
-  root.replaceChildren(renderHeader(save), routes[current](save));
+  const node = route.render({ save, onCleanup: fn => cleanups.push(fn) });
+  root.replaceChildren(...(route.chrome ? [renderHeader(save)] : []), node);
 }
 
 const router = createRouter(routes, path => {
@@ -23,5 +33,7 @@ const router = createRouter(routes, path => {
   render();
 });
 
-store.subscribe(render);
+const rerenderIfLive = () => { if (routes[current].live) render(); };
+store.subscribe(rerenderIfLive);
+ui.subscribe(rerenderIfLive);
 router.start();

@@ -16,3 +16,18 @@ test('hash vacío lleva al portal', () => {
 test('ruta desconocida lleva al portal', () => {
   assert.equal(resolveRoute('#/no-existe', routes), '/');
 });
+
+import { resolveTarget } from '../js/router.js';
+
+test('un guard redirige al módulo si no hay sesión', () => {
+  let session = null;
+  const guarded = {
+    '/': {},
+    '/europa': {},
+    '/europa/reto': { guard: () => (session ? null : '/europa') },
+  };
+  assert.equal(resolveTarget('#/europa/reto', guarded), '/europa');
+  session = {};
+  assert.equal(resolveTarget('#/europa/reto', guarded), '/europa/reto');
+  assert.equal(resolveTarget('#/nada', guarded), '/');
+});

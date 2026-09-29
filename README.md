@@ -26,13 +26,22 @@ Cubren la lógica pura (store, racha, dominio, insignias, router), los datos, el
 
 ```
 index.html
-css/       tokens, base, componentes y fuentes
-js/        main, router, store; data/ (países, insignias); lib/ (lógica pura); ui/ (pantallas)
+css/       tokens, base, componentes, módulo, reto y fuentes
+js/
+  main.js, app.js, router.js, store.js, config.js
+  data/    países y niveles, insignias, tipos de reto, identificadores del mapa
+  lib/     racha, dominio e insignias (lógica pura)
+  engine/  motor de retos sin DOM: selección, preguntas, puntuación, sesión, niveles
+  ui/      pantallas (portal, módulo, reto, resultados), mapa de Europa y los seis retos (play/)
 vendor/    d3-geo, topojson-client, world-atlas, banderas SVG y fuentes (todo local, sin CDNs)
 tests/     node --test
 design/    handoff de diseño (referencia, no se publica)
 openspec/  especificaciones y cambios
 ```
+
+## Ajustes del módulo
+
+Las constantes están en `js/config.js`: preguntas por sesión (8), parejas de Empareja (6), umbral de desbloqueo de niveles (60 %) y si se muestran las capitales en la lista de dominio.
 
 ## Recursos de terceros (`vendor/`)
 
